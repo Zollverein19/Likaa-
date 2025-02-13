@@ -1,0 +1,196 @@
+/* Reset CSS */
+* {
+    min-width: 0;
+    font: inherit;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dancing Script', cursive;
+}
+
+/* Kontainer utama */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    height: 100vh;
+}
+
+.container-letter {
+    position: relative;
+    text-align: center;
+    margin-top: 240px;
+}
+
+/* Kertas surat */
+.paper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1.5rem;
+    line-height: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 390px;
+    max-height: 180px;
+    text-align: center;
+    font-size: 1rem;
+    color: #d6002f;
+    font-weight: bold;
+    overflow-y: auto;
+    
+    /* Default: tersembunyi di dalam amplop */
+    z-index: 1; /* Tetap di dalam amplop */
+    opacity: 0; /* Tidak terlihat sebelum dibuka */
+    transition: all 0.75s ease-in-out;
+}
+
+/* Amplop */
+.letter {
+    position: relative;
+    border-left: 200px solid #ff7eb3;
+    border-right: 200px solid #ff7eb3;
+    border-top: 100px solid transparent;
+    border-bottom: 100px solid #ff5289;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Amplop lebih tinggi dari paper */
+}
+
+/* Penutup amplop */
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 100px solid #ff5289;
+    border-bottom: 100px solid transparent;
+    transition: transform 0.75s;
+    transform-origin: top;
+    z-index: 3; /* Harus lebih tinggi dari kertas */
+}
+
+/* Animasi buka amplop */
+.open-cover {
+    transform: rotateX(180deg);
+}
+
+/* Kertas muncul setelah amplop dibuka */
+.open-paper {
+    opacity: 1; /* Baru terlihat saat amplop terbuka */
+    z-index: 4; /* Muncul di atas amplop */
+    animation: openPaper 0.5s forwards;
+}
+
+/* Animasi naik kertas */
+@keyframes openPaper {
+    0% { top: 0; }
+    100% { top: -200px; }
+}
+
+/* Animasi tutup kertas */
+.close-paper {
+    animation: closePaper 0.5s forwards;
+    opacity: 0;
+    z-index: 1;
+}
+
+@keyframes closePaper {
+    0% { top: -200px; opacity: 1; }
+    100% { top: 0; opacity: 0; }
+}
+
+
+/* Animasi hati */
+.heart {
+    display: none;
+    position: absolute;
+    top: 12%;
+    left: 40%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    color: red;
+    animation: pulse 1s forwards;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+}
+
+/* Tombol */
+.options {
+    display: flex;
+    gap: 1rem;
+}
+
+button {
+    background: #ff5289;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #ff7eb3;
+}
+
+button:disabled {
+    background: #ffd6e8;
+    cursor: not-allowed;
+}
+
+/* Efek Bintang Jatuh */
+@keyframes fallingStars {
+    0% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes twinkling {
+    0%, 100% {
+        opacity: 1.4;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.star {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    background-color: yellow;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    box-shadow: 0 0 10px yellow;
+    animation: fallingStars linear infinite, twinkling 1.5s infinite alternate;
+}
+
+
